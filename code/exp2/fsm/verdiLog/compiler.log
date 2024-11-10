@@ -1,0 +1,12 @@
+*design* DebussyLib (btIdent Verdi_S-2021.09-SP2-3)
+Command arguments:
+    +define+verilog
+    -sv
+    -f ./file.list
+        ./fsm_3_tb.v
+        ./fsm_3.v
+
+Highest level modules:
+FSM_3_tb
+
+Total	0 error(s),   0 warning(s)

@@ -1,0 +1,3 @@
+Command Line: /opt/eda/synopsys/verdi/S-2021.09-SP2-3/platform/LINUXAMD64/bin/Novas -sv -f ./file.list -ssf fsm_3_tb.fsdb
+uname(Linux socserver 4.18.0-553.el8_10.x86_64 #1 SMP Fri May 24 13:05:10 UTC 2024 x86_64)
+au time 53482.448860 150.836402 124.103964 delta 305287168 305287168 total 856592384 856592384

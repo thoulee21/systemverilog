@@ -1,0 +1,20 @@
+Command: /home/eda/work5/./simv -l sim.log -ucli -i ./dump_fsdb_vcs.tcl +fsdb+autoflush
+Chronologic VCS simulator copyright 1991-2021
+Contains Synopsys proprietary information.
+Compiler version S-2021.09-SP2_Full64; Runtime version S-2021.09-SP2_Full64;  Nov  5 17:00 2024
+ucli% fsdbDumpfile "uart_loopback.fsdb"
+*Verdi* Loading libsscore_vcs202109.so
+FSDB Dumper for VCS, Release Verdi_S-2021.09-SP2-3, Linux x86_64/64bit, 07/07/2022
+(C) 1996 - 2022 by Synopsys, Inc.
+*Verdi* FSDB WARNING: The FSDB file already exists. Overwriting the FSDB file may crash the programs that are using this file.
+*Verdi* : Create FSDB file 'uart_loopback.fsdb'
+ucli% fsdbDumpvars 0 "tb_uart_loopback"
+*Verdi* : Begin traversing the scope (tb_uart_loopback), layer (0).
+*Verdi* : End of traversing.
+ucli% run 1000000ns
+1000000000 ps
+ucli% quit
+           V C S   S i m u l a t i o n   R e p o r t 
+Time: 1000000000 ps
+CPU Time:      0.380 seconds;       Data structure size:   0.0Mb
+Tue Nov  5 17:00:14 2024

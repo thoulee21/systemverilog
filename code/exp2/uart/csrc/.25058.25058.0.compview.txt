@@ -1,0 +1,5 @@
+{"vcs1":{"timestamp_begin":1730796722.303757966, "rt":0.14, "ut":0.07, "st":0.04}}
+{"SNPS_VCS_INTERNAL_ROOT_START_TIME": 1730796721.594286229}
+{"VCS_COMP_START_TIME": 1730796721.594286229}
+{"VCS_COMP_END_TIME": 1730796722.498644989}
+{"VCS_USER_OPTIONS": "+v2k -f ./file.list -full64 -sverilog -debug_access+all -timescale=1ns/1ps -debug_access+all -l compile.log -P /opt/eda/synopsys/verdi/S-2021.09-SP2-3/share/PLI/VCS/LINUX64/novas.tab /opt/eda/synopsys/verdi/S-2021.09-SP2-3/share/PLI/VCS/LINUX64/pli.a -o simv"}

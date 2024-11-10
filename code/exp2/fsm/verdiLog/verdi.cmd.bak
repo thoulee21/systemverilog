@@ -1,0 +1,5 @@
+debImport "-sv" "-f" "./file.list"
+debLoadSimResult /home/eda/work6/fsm_3_tb.fsdb
+wvCreateWindow
+verdiSetActWin -dock widgetDock_MTB_SOURCE_TAB_1
+debExit

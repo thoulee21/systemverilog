@@ -1,0 +1,20 @@
+Command: /home/eda/work6/./simv -l sim.log -ucli -i ./dump_fsdb_vcs.tcl +fsdb+autoflush
+Chronologic VCS simulator copyright 1991-2021
+Contains Synopsys proprietary information.
+Compiler version S-2021.09-SP2_Full64; Runtime version S-2021.09-SP2_Full64;  Nov  5 22:34 2024
+ucli% fsdbDumpfile "fsm_3_tb.fsdb"
+*Verdi* Loading libsscore_vcs202109.so
+FSDB Dumper for VCS, Release Verdi_S-2021.09-SP2-3, Linux x86_64/64bit, 07/07/2022
+(C) 1996 - 2022 by Synopsys, Inc.
+*Verdi* FSDB WARNING: The FSDB file already exists. Overwriting the FSDB file may crash the programs that are using this file.
+*Verdi* : Create FSDB file 'fsm_3_tb.fsdb'
+ucli% fsdbDumpvars 4 "FSM_3_tb"
+*Verdi* : Begin traversing the scope (FSM_3_tb), layer (4).
+*Verdi* : End of traversing.
+ucli% run 100000000ns
+fsm_3_tb.v, 140 :     $stop;
+ucli% quit
+           V C S   S i m u l a t i o n   R e p o r t 
+Time: 1942000 ps
+CPU Time:      0.360 seconds;       Data structure size:   0.0Mb
+Tue Nov  5 22:34:57 2024
