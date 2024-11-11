@@ -40,7 +40,7 @@ begin
         case(i)
             2'd0: begin i <= i + 1;  rout3 <= 0; end
             2'd1: begin i <= 2'd3; rout3 <= 0; end
-            3'd3: begin i <= 2'd0; rout3 <= 1; end
+            2'd3: begin i <= 2'd0; rout3 <= 1; end
         endcase
 end
 
