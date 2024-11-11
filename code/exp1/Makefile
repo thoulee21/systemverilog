@@ -1,27 +1,22 @@
 
-FILES = top.sv atm.sv atm_if.sv atm_cell.sv scoreboard.sv driver.sv monitor.sv atm_router.sv test.sv 
-
-FLAGS = -sverilog -debug -ntb_opts dtm
-
-run:	simv
-	simv -l sim.log
-
-simv:   ${FILES} ${IFILES}
-	vcs ${FLAGS} -l comp.log ${FILES}
-
-gui:	simv
-	./simv -gui
-
-waves:	${FILES}  ${IFILES}
-	vcs -sverilog -RI -debug_all +cfgfile+default.cfg -l simv.log ${FILES}
-
-
-DIR = $(shell basename `pwd`)
-
-tar:	clean
-	cd ..; \
-	tar cvf ${DIR}.tar ${DIR}
-
+vcs_sim:
+	./simv -l sim.log +notimingcheck +nospecify -k ucli.key 
+run_verdi:
+	verdi -sv -f ./file.list -ssf test.fsdb &
 clean:
-	@rm -rf simv* csrc* *.log *.key core* .__solver* vcdplus.vpd
-	@rm -rf  vera*.rc  .vera_debugger_rc.lock *~ .__snps* 
+	rm -rf simv.daidir csrc DVEfiles verdiLog *.log  *.conf *.vpd *.key *.fsdb simv *.dump
+collect_error:
+	perl collect_vcs_error_warning.pl
+vcs_compile:
+	vcs +v2k -f ./file.list \
+		-full64 \
+		-sverilog \
+		-debug_access+all \
+		-timescale=1ns/1ps \
+		-debug_access+cbk \
+		-l compile.log \
+		-P ${VERDI_HOME}/share/PLI/VCS/LINUX64/novas.tab \
+		${VERDI_HOME}/share/PLI/VCS/LINUX64/pli.a \
+		-cm line+tgl+fsm+cond+branch+assert \
+	    -o simv
+				

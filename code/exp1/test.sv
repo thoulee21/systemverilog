@@ -49,4 +49,13 @@ program automatic test(Rx_if.TB Rx[4],
       
     end
 
+	initial begin
+		$fsdbDumpfile("test.fsdb");
+		$fsdbDumpvars(0);
+
+	end
+
+
+	
+
 endprogram : test
