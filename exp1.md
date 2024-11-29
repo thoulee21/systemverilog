@@ -43,6 +43,24 @@ ATM信元类的实现包含：
 2. 元数据：包括corrupted和eot_cell标志
 3. 约束定义：控制HEC错误率和延迟范围
 
+关键代码实现：
+```systemverilog
+class ATM_Cell;
+    // 物理数据
+    rand bit [ 3:0] gfc = 0;    // 通用流控制
+    rand bit [ 7:0] vpi = 0;    // 虚拟路径标识符
+    rand bit [15:0] vci = 0;    // 虚拟通道标识符
+    rand bit [ 2:0] pt  = 0;    // 负载类型
+    rand bit        clp = 0;    // 信元丢失优先级
+    rand bit [ 7:0] hec = 1;    // 头错误控制
+    rand bit [ 7:0] payload[ATM_PAYLOAD_SIZE];
+    
+    // 元数据
+    bit corrupted = 0;          // 错误标志
+    bit eot_cell  = 0;          // 传输结束标志
+endclass
+```
+
 ### 3.2 接口设计
 
 系统采用了分离的Rx和Tx接口设计，主要特点：
@@ -50,12 +68,77 @@ ATM信元类的实现包含：
 2. 明确的方向定义（通过modport）
 3. 接收发送分离，便于并行操作
 
+接口定义示例：
+```systemverilog
+interface Rx_if (input logic clk);
+    logic [7:0] data;
+    logic soc, en, clav, rclk;
+
+    clocking cb @(posedge clk);
+      output data, soc, clav;
+      input  en;
+    endclocking : cb
+
+    modport DUT (output en, rclk,
+                input  data, soc, clav);
+endinterface
+```
+
 ### 3.3 驱动器实现
 
 驱动器采用了事件驱动的设计方式：
 1. 精确的时序控制
 2. 完整的握手机制
 3. 支持随机化测试
+
+驱动器核心实现：
+```systemverilog
+class Driver;
+    task drive_cell(ATM_Cell ac);
+        bit [7:0] bytes[];
+        
+        #ac.delay;
+        ac.byte_pack(bytes);
+        
+        @Rx.cb;  
+        Rx.cb.clav <= 1;            // 准备传输
+        do
+          @Rx.cb;                   // 等待使能
+        while (Rx.cb.en != 0);      
+
+        Rx.cb.soc <= 1;             // 开始传输
+        Rx.cb.data <= bytes[0];     // 发送第一个字节
+    endtask
+endclass
+```
+
+### 4.1 功能验证
+
+主要验证以下方面：
+1. 数据完整性：通过compare函数验证
+2. 错误处理：通过HEC错误注入测试
+3. 协议一致性：验证信元传输过程
+
+数据完整性验证示例：
+```systemverilog
+function int compare(ref ATM_Cell ac);
+    if (ac.gfc != this.gfc) begin
+        $display("gfc mismatch ac=%0h, this=%0h", ac.gfc, this.gfc);
+        return 0;
+    end
+    
+    // 其他字段比较...
+    
+    for (int i=0; i<ATM_PAYLOAD_SIZE; i++) begin
+        if (ac.payload[i] != this.payload[i]) begin
+            $display("payload[%0d] mismatch ac=%0h, this=%0h", 
+                    i, ac.payload[i], this.payload[i]);
+            return 0;
+        end
+    end
+    return 1;
+endfunction
+```
 
 ## 4. 验证策略
 
@@ -96,5 +179,3 @@ ATM信元类的实现包含：
 2. 可靠的错误检测功能
 3. 灵活的接口设计
 4. 可配置的测试参数
-
-系统具有良好的可扩展性和可维护性，为后续功能扩展提供了良好基础。 
